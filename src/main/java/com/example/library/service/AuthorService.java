@@ -19,16 +19,15 @@ public class AuthorService {
         return authors;
     }
 
-    public Author createAuthor(Author author){
-
-        Author authorCreated = authorRepository.save(author);
-
-        return authorCreated;
-    }
+    public Author createAuthor(Author author){ return authorRepository.save(author); }
 
     public Optional<Author> findAuthorById(Long authorId){
 
         return authorRepository.findById(authorId);
+    }
+
+    public void deleteAuthorById(Long id){
+        authorRepository.deleteById(id);
     }
 
 

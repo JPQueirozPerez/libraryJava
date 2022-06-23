@@ -20,12 +20,7 @@ public class BookService {
         return books;
     }
 
-    public Book createBook (Book book){
-
-        Book bookCreated = bookRepository.save(book);
-
-        return bookCreated;
-    }
+    public Book createBook (Book book){ return bookRepository.save(book); }
 
     public Optional<Book> findBookById(Long id){
 
@@ -51,9 +46,6 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public void deleteBook(Book book) {
-
-        bookRepository.delete(book);
-    }
+    public void deleteBook(Book book) { bookRepository.delete(book); }
 
 }

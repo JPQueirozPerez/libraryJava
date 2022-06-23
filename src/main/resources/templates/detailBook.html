@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Title</title>
 </head>
 <body>
+<div class="w3-container">
+
+    <div class="w3-container w3-sand">
+        <h1>Library</h1>
+        <h5>form to update a book sending to @Controller @Service @Repository and H2 DB</h5>
+    </div>
+    <Br>
 <table class="w3-table-all w3-hoverable" th:object="${book}">
-    <tr><td>BookId</td><td th:text="${book.bookId}"></td></tr>
-    <tr><td>Title</td><td th:text="${book.title}"></td></tr>
-    <tr><td>ISBN</td><td th:text="${book.isbn}"></td></tr>
-    <tr><td>Pages</td>  <td th:text="${book.pages}"></td></tr>
-    <tr><td>Published Year</td> <td th:text="${book.publishedYear}"></td></tr>
-    <tr><td>Author</td><td th:text="${book.authorId}"></td></tr>
+    <tr><td><strong>BookId</strong></td><td th:text="*{bookId}"></td></tr>
+    <tr><td><strong>Title</strong></td><td th:text="*{title}"></td></tr>
+    <tr><td><strong>ISBN</strong></td><td th:text="*{isbn}"></td></tr>
+    <tr><td><strong>Pages</strong></td>  <td th:text="*{pages}"></td></tr>
+    <tr><td><strong>Published Year</strong></td> <td th:text="*{publishedYear}"></td></tr>
+    <tr><td><strong>Author</strong></td><td ><a th:href="@{detailAuthor(authorIdFromView=*{author.authorId})}" th:text="*{author?.authorName()}"></a></td></tr>
     </tr>
 </table>
+    <div>
+        <p><a th:href ="@{deleteBook(bookIdFromView=${book.bookId})}" class="w3-button w3-red">Delete this book</a></p>
+        <p><a th:href="@{/library/books}" class="w3-button w3-black">Back books</a></p>
+    </div>
+</div>
+
+
 </body>
 </html>

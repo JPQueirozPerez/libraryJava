@@ -2,9 +2,11 @@ package com.example.library.model;
 
 //https://projectlombok.org/features/all
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
@@ -21,13 +23,14 @@ public class Author {
     @Column(name="LAST_NAME")
     private String lastName;
     @Column(name = "DATE_OF_BIRTH", columnDefinition = "DATE")
-    private LocalDate dob;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dob;
 
-    @OneToMany(mappedBy = "authorId", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL )
     private List<Book> books = new ArrayList<Book>();
 
     //constructor without ID
-    public Author(String firstName, String lastName, LocalDate dob){
+    public Author(String firstName, String lastName, Date dob){
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -36,8 +39,12 @@ public class Author {
     //method to add books to books
     public void addBook(Book book) {
         this.getBooks().add(book);
-        if (book.getAuthorId() != null) book.getAuthorId().getBooks().remove(book);
-        book.setAuthorId(this);
+        if (book.getAuthor() != null) book.getAuthor().getBooks().remove(book);
+        book.setAuthor(this);
+    }
+
+    public String authorName(){
+        return firstName+" "+lastName;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Book {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="AUTHOR_FK")
-    private Author authorId;
+    private Author author;
 
     private int pages;
     @Column(name="PUBLISHED_YEAR")
@@ -35,6 +35,15 @@ public class Book {
         this.pages = pages;
         this.publishedYear = publishedYear;
         this.isbn = isbn;
+    }
+
+    //constructor without ID
+    public Book(String title, int pages, int publishedYear, String isbn, Author author) {
+        this.title = title;
+        this.pages = pages;
+        this.publishedYear = publishedYear;
+        this.isbn = isbn;
+        this.author = author;
     }
 
     @Override

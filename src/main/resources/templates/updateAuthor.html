@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+
+<div class="w3-container">
+
+    <div class="w3-container w3-sand">
+        <h1>Library</h1>
+        <h5>form to update a book sending to @Controller @Service @Repository and H2 DB</h5>
+    </div>
+    <Br>
+
+    <div class="w3-card-4" style="width:50%;">
+        <header class="w3-container w3-light-grey">
+            <img src="/img/open-book.png" alt="open-book" class="w3-right w3-padding-16 w3-margin-right" style="width:40px">
+            <p>Update author</p>
+        </header>
+
+        <div class="w3-container">
+            <form action="#"
+                  th:action="@{replaceAuthor/{idFromView}(idFromView=${authorfromController.authorId})}"
+                  th:object="${authorfromController}" method="post">
+                <p>
+                    <label for="authorId">Author Id</label>
+                    <input  type="number" name="authorId" class="w3-input" id="authorId"  th:field="*{authorId}" readonly></p>
+                <p>
+                <p>
+                    <label for="firstName">First Name</label>
+                    <input  type="text" name="firstName" class="w3-input" style="color:slateBlue;" id="firstName"  th:field="*{firstName}"></p>
+                <p>
+                    <label for="lastName">Last Name</label>
+                    <input  type="text" name="lastName" class="w3-input" id="lastName" style="color:slateBlue;" th:field="*{lastName}"></p>
+                <p>
+                    <label for="dob">Birthdate</label>
+                    <input type="date" name="dob" class="w3-input" id="dob" style="color:slateBlue;" th:field="*{dob}" ></p>
+                <div class="w3-container w3-padding-16">
+                    <input type="submit" value="Update author" class="w3-button w3-padding-16 w3-light-grey w3-right w3-margin-right"/>
+                </div>
+            </form>
+        </div>
+        <footer class="w3-container w3-dark-grey">
+            <p>Library</p>
+        </footer>
+
+    </div>
+
+    <div >
+        <p><a th:href="@{/library/books}" class="w3-button w3-black">Back books</a></p>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
