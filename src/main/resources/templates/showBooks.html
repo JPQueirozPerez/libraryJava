@@ -3,9 +3,10 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script type="text/javascript" th:src="@{/js/openLibrary.js}"></script>
   <title>Library</title>
 </head>
-<body>
+<body onload="getBooks()">
 
 <div class="w3-container w3-margin-bottom">
 
@@ -16,56 +17,61 @@
   <Br>
 
   <p>
-    <a href="#authorTable" class="w3-button w3-purple">Go to authors</a>
+    <a href="#authorTable" class="w3-button w3-deep-purple">Go to authors</a>
   </p>
   <div >
-    <p><a th:href="@{/library/fakerbooks(qtyBooks=100)}" class="w3-button w3-cyan">Create fake books on H2 -100-</a> | <a th:href="@{/library/fakerbooks(qtyBooks=500)}" class="w3-button w3-cyan">Create fake books on H2 -500-</a></p>
+    <p><a th:href="@{/library/fakerbooks(qtyBooks=100)}" class="w3-button w3-teal">Create fake books on H2 -100-</a> | <a th:href="@{/library/fakerbooks(qtyBooks=500)}" class="w3-button w3-teal">Create fake books on H2 -500-</a></p>
   </div>
 
 <div >
-    <a th:href="@{/library/newBook}" class="w3-button w3-cyan">Add new book</a>
+    <a th:href="@{/library/newBook}" class="w3-button w3-teal">Add new book</a>
   </div>
   <br>
-  <table class="w3-table-all w3-hoverable" id="bookTable" >
+  <table class="w3-table-all w3-hoverable" id="bookTable">
     <tr class="w3-green">
+      <td>Cover</td>
       <td>BookId</td>
       <td>Title</td>
       <td>ISBN</td>
       <td>Pages</td>
       <td>Published Year</td>
-      <td>Author</td>
+      <td>Authors</td>
       <td>Delete</td>
       <td>Update</td>
       <td>Detail</td>
     </tr>
     <tr th:each="book:${booksfromController}">
 
+      <td class="cover"></td>
       <td th:text="${book.bookId}"></td>
-      <td th:text="${book.title}"></td>
+      <td class="title" th:text="${book.title}"></td>
       <td th:text="${book.isbn}"></td>
       <td th:text="${book.pages}"></td>
       <td th:text="${book.publishedYear}"></td>
-      <td th:text="${book.author?.authorName()}"></td>
+<!--      <td th:text="${book.authors?.authorName()}"></td>-->
+      <td><div th:each="author : ${book.authors}">
+      <span th:text="${author.authorName()}"></span>
+</div></td>
 
       <td> <a th:href ="@{deleteBook(bookIdFromView=${book.bookId})}"
-              class="w3-button w3-red">Delete this book</a> </td>
+              class="w3-button w3-red w3-round-xxlarge">Delete this book</a> </td>
       <td> <a th:href ="@{updateBook(bookIdFromView=${book.bookId})}"
-              class="w3-button w3-pale-green">Update this book</a> </td>
+              class="w3-button w3-light-blue w3-round-xxlarge">Update this book</a> </td>
 
       <td> <a th:href ="@{detailBook(bookIdFromView=${book.bookId})}"
-              class="w3-button w3-black">Detail book</a> </td>
+              class="w3-button w3-blue-gray w3-round-xxlarge">Detail book</a> </td>
 
     </tr>
   </table>
 <br>
   <p>
-    <a href="#bookTable" class="w3-button w3-purple">Go to books</a>
+    <a href="#bookTable" class="w3-button w3-deep-purple">Go to books</a>
   </p>
   <div >
-    <p><a th:href="@{/library/fakerauthors(qtyAuthors=10)}" class="w3-button w3-blue">Create fake authors on H2 -10-</a> |  <a th:href="@{/library/fakerauthors(qtyAuthors=20)}" class="w3-button w3-blue">Create fake authors on H2 -20-</a></p>
+    <p><a th:href="@{/library/fakerauthors(qtyAuthors=10)}" class="w3-button w3-amber">Create fake authors on H2 -10-</a> |  <a th:href="@{/library/fakerauthors(qtyAuthors=20)}" class="w3-button w3-amber">Create fake authors on H2 -20-</a></p>
   </div>
   <div >
-    <a th:href="@{/library/newAuthor}" class="w3-button w3-blue">Add new author</a>
+    <a th:href="@{/library/newAuthor}" class="w3-button w3-amber">Add new author</a>
   </div>
   <br>
   <table class="w3-table-all w3-hoverable" id="authorTable" >
@@ -85,11 +91,11 @@
       <td th:text="${author.lastName}"></td>
       <td th:text="${#dates.format(author.dob,'dd/MMM/yyyy')}"></td>
       <td> <a th:href ="@{deleteAuthor(authorIdFromView=${author.authorId})}"
-              class="w3-button w3-red">Delete this author</a> </td>
+              class="w3-button w3-red w3-round-xxlarge">Delete this author</a> </td>
       <td> <a th:href ="@{updateAuthor(authorIdFromView=${author.authorId})}"
-              class="w3-button w3-pale-green">Update this author</a> </td>
+              class="w3-button w3-light-blue w3-round-xxlarge">Update this author</a> </td>
       <td> <a th:href ="@{detailAuthor(authorIdFromView=${author.authorId})}"
-              class="w3-button w3-black">Detail author</a> </td>
+              class="w3-button w3-blue-gray w3-round-xxlarge">Detail author</a> </td>
     </tr>
   </table>
 

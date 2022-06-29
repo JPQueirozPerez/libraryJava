@@ -4,6 +4,8 @@ package com.example.library.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
@@ -19,9 +21,11 @@ public class Book {
     private String title;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="AUTHOR_FK")
-    private Author author;
+    @ManyToMany
+    @JoinTable(name = "BOOK_AUTHOR",
+            joinColumns = @JoinColumn(name = "AUTHOR_FK"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_FK"))
+    private List<Author> authors = new ArrayList<Author>();
 
     private int pages;
     @Column(name="PUBLISHED_YEAR")
@@ -38,12 +42,12 @@ public class Book {
     }
 
     //constructor without ID
-    public Book(String title, int pages, int publishedYear, String isbn, Author author) {
+    public Book(String title, int pages, int publishedYear, String isbn, List<Author> authors) {
         this.title = title;
         this.pages = pages;
         this.publishedYear = publishedYear;
         this.isbn = isbn;
-        this.author = author;
+        this.authors = authors;
     }
 
     @Override

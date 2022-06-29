@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -56,9 +57,9 @@ public class LibraryWebController {
     }
 
     @RequestMapping("/addBook")
-    public String addBook(@RequestParam("title") String title, @RequestParam("isbn") String isbn, @RequestParam("pages") int pages, @RequestParam("publishedYear") int publishedYear, @RequestParam("authorId") Author authorId) {
+    public String addBook(@RequestParam("title") String title, @RequestParam("isbn") String isbn, @RequestParam("pages") int pages, @RequestParam("publishedYear") int publishedYear, @RequestParam("authorId") List<Author> authorsId) {
 
-        Book book = new Book(title, pages, publishedYear, isbn, authorId);
+        Book book = new Book(title, pages, publishedYear, isbn, authorsId);
         bookService.createBook(book);
         return "redirect:books";
     }
@@ -157,7 +158,7 @@ public class LibraryWebController {
     }
 
     @PostMapping("/replaceBook/{idFromView}")
-    public String replaceBook(@PathVariable("idFromView") Long id, Book book, Author author,
+    public String replaceBook(@PathVariable("idFromView") Long id, Book book, List<Author> authors,
                               Model bookfromController, Model authorfromController) {
         bookfromController.addAttribute("bookfromController",
                 bookService.findBookById(id).get());
@@ -165,7 +166,7 @@ public class LibraryWebController {
                 authorService.getAllAuthors());
         Optional<Book> newBook = bookService.findBookById(id);
         if (newBook.isPresent()) {
-            book = new Book(book.getBookId(), book.getTitle(), author, book.getPages(), book.getPublishedYear(), book.getIsbn());
+            book = new Book(book.getBookId(), book.getTitle(), authors, book.getPages(), book.getPublishedYear(), book.getIsbn());
             bookService.createBook(book);
             return "redirect:/library/books";
         } else return "error";

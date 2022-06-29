@@ -13,13 +13,17 @@
         <h5>form to update a book sending to @Controller @Service @Repository and H2 DB</h5>
     </div>
     <Br>
-<table class="w3-table-all w3-hoverable" th:object="${book}">
+<table class="w3-table-all w3-hoverable" th:object="${book}" th:with="countStat=${1}">
     <tr><td><strong>BookId</strong></td><td th:text="*{bookId}"></td></tr>
     <tr><td><strong>Title</strong></td><td th:text="*{title}"></td></tr>
     <tr><td><strong>ISBN</strong></td><td th:text="*{isbn}"></td></tr>
     <tr><td><strong>Pages</strong></td>  <td th:text="*{pages}"></td></tr>
     <tr><td><strong>Published Year</strong></td> <td th:text="*{publishedYear}"></td></tr>
-    <tr><td><strong>Author</strong></td><td ><a th:href="@{detailAuthor(authorIdFromView=*{author.authorId})}" th:text="*{author?.authorName()}"></a></td></tr>
+    <div th:each="author,countStat : ${book.authors}">
+        <tr><td><strong>Author <span th:text="${countStat.count}"></span></strong></td>
+            <td><a th:href="@{detailAuthor(authorIdFromView=${author.authorId})}" th:text="${author.authorName()}"></a></td></td>
+        </tr>
+    </div>
     </tr>
 </table>
     <div>

@@ -26,17 +26,17 @@
                   th:action="@{replaceAuthor/{idFromView}(idFromView=${authorfromController.authorId})}"
                   th:object="${authorfromController}" method="post">
                 <p>
-                    <label for="authorId">Author Id</label>
+                    <label class="w3-text-gray" for="authorId"><b>Author Id</b></label>
                     <input  type="number" name="authorId" class="w3-input" id="authorId"  th:field="*{authorId}" readonly></p>
                 <p>
                 <p>
-                    <label for="firstName">First Name</label>
+                    <label class="w3-text-gray" for="firstName"><b>First Name</b></label>
                     <input  type="text" name="firstName" class="w3-input" style="color:slateBlue;" id="firstName"  th:field="*{firstName}"></p>
                 <p>
-                    <label for="lastName">Last Name</label>
+                    <label class="w3-text-gray" for="lastName"><b>Last Name</b></label>
                     <input  type="text" name="lastName" class="w3-input" id="lastName" style="color:slateBlue;" th:field="*{lastName}"></p>
                 <p>
-                    <label for="dob">Birthdate</label>
+                    <label class="w3-text-gray" for="dob"><b>Birthdate</b></label>
                     <input type="date" name="dob" class="w3-input" id="dob" style="color:slateBlue;" th:field="*{dob}" ></p>
                 <div class="w3-container w3-padding-16">
                     <input type="submit" value="Update author" class="w3-button w3-padding-16 w3-light-grey w3-right w3-margin-right"/>

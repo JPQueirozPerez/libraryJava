@@ -119,7 +119,7 @@ class LibraryApplicationTests {
                 int pages = faker.random().nextInt(100, 1000);
                 int year = faker.random().nextInt(1800, 2020);
                 Book book = new Book(title, pages, year, "56756-DFG2T-55" + i);
-                book.setAuthor(authorFound.get());
+//                book.setAuthor(authorFound.get());
                 bookService.createBook(book);
             }
         }
@@ -139,8 +139,8 @@ class LibraryApplicationTests {
             bookService.createBook(book1);
             bookService.createBook(book2);
             //assign author to books
-            authorFound.get().addBook(book1);
-            authorFound.get().addBook(book2);
+//            authorFound.get().addBook(book1);
+//            authorFound.get().addBook(book2);
 
             authorService.createAuthor(authorFound.get());
 

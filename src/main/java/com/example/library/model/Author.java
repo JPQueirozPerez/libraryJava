@@ -26,7 +26,10 @@ public class Author {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL )
+    @ManyToMany
+    @JoinTable(name = "BOOK_AUTHOR",
+            joinColumns=@JoinColumn(name = "BOOK_FK"),
+            inverseJoinColumns = @JoinColumn(name = "AUTHOR_FK"))
     private List<Book> books = new ArrayList<Book>();
 
     //constructor without ID
@@ -37,11 +40,11 @@ public class Author {
     }
 
     //method to add books to books
-    public void addBook(Book book) {
-        this.getBooks().add(book);
-        if (book.getAuthor() != null) book.getAuthor().getBooks().remove(book);
-        book.setAuthor(this);
-    }
+//    public void addBook(Book book) {
+//        this.getBooks().add(book);
+//        if (book.getAuthors() != null) book.getAuthors().getBooks().remove(book);
+//        book.setAuthors((List<Author>) this);
+//    }
 
     public String authorName(){
         return firstName+" "+lastName;
