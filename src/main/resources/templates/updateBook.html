@@ -5,59 +5,87 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/addElement.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
 
 <div class="w3-container">
 
-    <div class="w3-container w3-sand">
-        <h1>Library</h1>
-        <h5>form to update a book sending to @Controller @Service @Repository and H2 DB</h5>
-    </div>
+    <header class="w3-container">
+        <div class="head">
+            <h1>Library</h1>
+            <h5>form to update a book sending to @Controller @Service @Repository and H2 DB</h5>
+        </div>
+    </header>
     <Br>
 
     <div class="w3-card-4" style="width:50%;">
         <header class="w3-container w3-light-grey">
-            <img src="/img/open-book.png" alt="open-book" class="w3-right w3-padding-16 w3-margin-right" style="width:40px">
+            <img src="/img/open-book.png" alt="open-book" class="w3-right w3-padding-16 w3-margin-right"
+                 style="width:40px">
             <p>Update book</p>
         </header>
 
-        <div class="w3-container">
+        <div class="w3-container" th:with="countStat=${0}">
             <div style="margin-top: 10px;">
-                <button class="w3-button w3-circle w3-black" id="plus">+</button><span class="w3-text-gray" style="margin-left: 5px;"><b>Add more authors to the book</b></span></div>
+                <button class="w3-button w3-circle w3-black" id="plus">+</button>
+                <span class="w3-text-gray" style="margin-left: 5px;"><b>Add more authors to the book</b></span>
+            </div>
             <form action="#"
                   th:action="@{replaceBook/{idFromView}(idFromView=${bookfromController.bookId})}"
                   th:object="${bookfromController}" method="post">
                 <p>
                     <label class="w3-text-gray" for="bookId"><b>Book Id</b></label>
-                    <input  type="number" name="bookId" class="w3-input" id="bookId"  th:field="*{bookId}" readonly></p>
+                    <input type="number" name="bookId" class="w3-input" id="bookId" th:field="*{bookId}" readonly></p>
                 <p>
                 <p>
                     <label class="w3-text-gray" for="title"><b>Title</b></label>
-                    <input  type="text" name="title" class="w3-input" style="color:slateBlue;" id="title"  th:field="*{title}"></p>
+                    <input type="text" name="title" class="w3-input" style="color:slateBlue;" id="title"
+                           th:field="*{title}"></p>
                 <p>
                     <label class="w3-text-gray" for="isbn"><b>ISBN</b></label>
-                    <input  type="text" name="isbn" class="w3-input" id="isbn" style="color:slateBlue;" th:field="*{isbn}"></p>
+                    <input type="text" name="isbn" class="w3-input" id="isbn" style="color:slateBlue;"
+                           th:field="*{isbn}"></p>
                 <p>
                     <label class="w3-text-gray" for="pages"><b>Pages</b></label>
-                    <input type="number" name="pages" class="w3-input" id="pages" style="color:slateBlue;" th:field="*{pages}" ></p>
-                <div th:object="${author}" class="w3-input">
-                    <th:block th:if="${book != null}">
-                    <label class="w3-text-gray"><b>Select author</b></label><br>
-                    <div th:each="author : ${book.authors}">
-                    <select class="w3-button w3-blue" id="selectAuthor" name="authorId">
-                        <option th:each="author : ${authorsfromController}" th:value="${author.authorId}" th:text="${author.authorName()}"
-                                th:field="${bookfromController.author}">No author</option>
-                    </select></div></th:block>
-                </div>
+                    <input type="number" name="pages" class="w3-input" id="pages" style="color:slateBlue;"
+                           th:field="*{pages}"></p>
+
+                <label class="w3-text-gray" id="selectAuthorsLabel"><b>Select authors</b></label><br>
+                <span th:object="${authorsfromController}">
+                    <span th:if="${bookfromController.authors}">
+                        <div th:each="author,countStat : ${bookfromController.authors}">
+                            <div class="w3-input">
+                                <select class="w3-button w3-blue" id="selectAuthor" name="authorId">
+                                    <option th:each="author : ${authorsfromController}" th:value="${author.authorId}"
+                                            th:text="${author.authorName()}"
+                                            th:field="${bookfromController.authors[__${countStat.index}__]}">No author
+                                    </option>
+                                </select> <span th:if="${countStat.index!=0}"><button class="w3-button w3-circle w3-red" onclick="return this.parentNode.parentNode.remove();"
+                                                   id="close">x</button></span>
+                            </div>
+                        </div>
+                    </span>
+                    <span th:if="${#lists.isEmpty(bookfromController.authors)}">
+                        <div class="w3-input">
+                            <select class="w3-button w3-blue" id="selectAuthor" name="authorId">
+                                <option th:each="author : ${authorsfromController}"
+                                        th:value="${author.authorId}"
+                                        th:text="${author.authorName()}"></option>
+                            </select>
+                        </div>
+                    </span>
+                </span>
                 <div class="row"></div>
                 <p>
                     <label class="w3-text-gray" for="publishedYear"><b>Published Year</b></label>
-                    <input  type="number" name="publishedYear" class="w3-input" style="color:slateBlue;" id="publishedYear" th:field="*{publishedYear}"></p>
+                    <input type="number" name="publishedYear" class="w3-input" style="color:slateBlue;"
+                           id="publishedYear" th:field="*{publishedYear}"></p>
 
                 <div class="w3-container w3-padding-16">
-                    <input type="submit" value="Update book" class="w3-button w3-padding-16 w3-light-grey w3-right w3-margin-right"/>
+                    <input type="submit" value="Update book"
+                           class="w3-button w3-padding-16 w3-light-grey w3-right w3-margin-right"/>
                 </div>
             </form>
         </div>
@@ -67,12 +95,11 @@
 
     </div>
 
-    <div >
+    <div>
         <p><a th:href="@{/library/books}" class="w3-button w3-black">Back books</a></p>
     </div>
 
 </div>
-
 
 
 </body>

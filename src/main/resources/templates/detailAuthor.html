@@ -3,15 +3,18 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Title</title>
 </head>
 <body>
 <div class="w3-container">
 
-    <div class="w3-container w3-sand">
-        <h1>Library</h1>
+    <header class="w3-container">
+        <div class="head">
+            <h1>Library</h1>
         <h5>form to update a book sending to @Controller @Service @Repository and H2 DB</h5>
     </div>
+    </header>
     <Br>
     <table class="w3-table-all w3-hoverable" th:object="${author}" th:with="countStat=${1}">
         <tr><td><strong>AuthorId</strong></td><td th:text="*{authorId}"></td></tr>
@@ -23,7 +26,7 @@
         </div>
     </table>
     <div>
-        <p><a th:href ="@{deleteAuthor(authorIdFromView=${author.authorId})}" class="w3-button w3-red">Delete this author</a></p>
+        <p><a th:href ="@{deleteAuthor(authorIdFromView=${author.authorId})}" class="w3-button w3-red" id="remove">Delete this author</a></p>
         <p><a th:href="@{/library/books}" class="w3-button w3-black">Back books</a></p>
     </div>
 </div>

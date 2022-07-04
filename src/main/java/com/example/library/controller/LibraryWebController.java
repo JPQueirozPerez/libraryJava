@@ -2,17 +2,13 @@ package com.example.library.controller;
 
 import com.example.library.model.Author;
 import com.example.library.model.Book;
-import com.example.library.repository.AuthorRepository;
 import com.example.library.service.BookService;
 import com.example.library.service.AuthorService;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +17,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 
 @Controller
@@ -82,7 +77,13 @@ public class LibraryWebController {
 
     @RequestMapping("/deleteAuthor")
     public String deleteAuthor(@RequestParam("authorIdFromView") Long id) {
-        //
+        Optional<Author> author = authorService.findAuthorById(id);
+
+        List<Book> authorBooks = author.get().getBooks();
+        for (Book book : authorBooks) {
+            Long bookId = book.getBookId();
+            bookService.deleteBookById(bookId);
+        }
         authorService.deleteAuthorById(id);
         return "redirect:books#authorTable";
     }
@@ -143,6 +144,7 @@ public class LibraryWebController {
 
     @RequestMapping("/updateBook")
     public String updateBook(@RequestParam("bookIdFromView") Long id, Model bookfromController, Model authorfromController) {
+
         bookfromController.addAttribute("bookfromController",
                 bookService.findBookById(id).get());
         authorfromController.addAttribute("authorsfromController",
@@ -158,7 +160,7 @@ public class LibraryWebController {
     }
 
     @PostMapping("/replaceBook/{idFromView}")
-    public String replaceBook(@PathVariable("idFromView") Long id, Book book, List<Author> authors,
+    public String replaceBook(@PathVariable("idFromView") Long id, Book book, @RequestParam("authorId") List<Author> authors,
                               Model bookfromController, Model authorfromController) {
         bookfromController.addAttribute("bookfromController",
                 bookService.findBookById(id).get());

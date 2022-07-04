@@ -1,0 +1,24 @@
+div.head {
+background: url(../img/lined-paper.png), linear-gradient(-135deg, transparent 2.5em, #C2B280 0);
+background-repeat: no-repeat;
+margin-left: -18px;
+margin-right: -18px;
+padding-left: 12px;
+height: 8.5em;
+}
+
+div.head::after {
+content:'';
+position: absolute;
+top: 10.3px;
+right: 14px;
+display: inline-block;
+box-shadow: -4px 3px 3px #394834;
+}
+
+.head::after {
+width: 3.58em;
+height: 3.58em;
+background: linear-gradient(-135deg, transparent 2.5em, #f2d579 0);
+
+}
